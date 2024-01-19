@@ -1,0 +1,13 @@
+- name: change php lines
+  lineinfile:
+    path: /etc/php.ini
+    regexp: "{{ item.reg }}"
+    line: "{{ item.val }}"
+  with_items: 
+    - { reg: 'max_execution_time', val: 'max_execution_time = 600' }
+    - { reg: 'post_max_size', val: 'max_execution_time=32M' }
+    - { reg: 'max_input_time', val: 'max_input_time = 600' }
+    - { reg: 'upload_max_filesize', val: 'upload_max_filesize = 16M' }
+    - { reg: 'memory_limit', val: 'memory_limit = 256M' }
+    - { reg: 'date.timezone', val: 'date.timezone = Asia/Tehran' }
+    

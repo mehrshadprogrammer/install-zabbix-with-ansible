@@ -1,0 +1,77 @@
+- name: enable maria db service
+  service: 
+    name: mariadb
+    enabled: yes
+  tags: [zabbix_mariadb]
+- name: restart mariadb service
+  service:
+    name: mariadb
+    state: restarted
+  tags: [zabbix_mariadb]
+- name: create zabbix database
+  mysql_db: 
+    name: zabbix
+    state: present
+  tags: [zabbix_mariadb]
+- name: create zabbix
+  mysql_user:
+    name: zabbix
+    password: password
+    host: "{{ item }}"
+    login_user: "root"
+    login_password: ""
+    priv: zabbix.*:ALL
+    state: present
+    check_implicit_admin: yes
+  loop: 
+    - localhost
+    - 127.0.0.1
+    - ::1
+  tags: [zabbix_mariadb]
+- name: Reload privilage tables
+  command: 'mysql -ne "{{ item }}"'
+  loop:
+    - FLUSH PRIVIALGES
+  changed_when: False
+  tags: [zabbix_mariadb]
+- name: copy create.sql.gz to /tmp
+  copy: 
+    src: /usr/share/doc/zabbix-server-mysql-3.4.15/create.sql.gz
+    dest: /tmp/
+    remote_src: yes
+  tags: [zabbix_mariadb]
+- name: Run create.sql.gz 
+  shell: 'zcat /tmp/create.sql.gz | mysql -u root zabbix'
+  tags: [zabbix_mariadb]
+  ignore_errors: yes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

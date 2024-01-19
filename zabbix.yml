@@ -1,0 +1,18 @@
+- name: change values
+  lineinfile: 
+    path: /etc/zabbix/zabbix_server.conf
+    regex: "DBHost=" 
+    line: "DBHost=localhost"
+- name: change values-2
+  lineinfile: 
+    path: /etc/zabbix/zabbix_server.conf
+    regex: "DBPassword=" 
+    line: "DBPassword=password"
+- name: service start
+  service: 
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop:
+    - zabbix-server
+    - zabbix-agent

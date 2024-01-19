@@ -1,0 +1,16 @@
+- name: all zabbix process installation 
+  hosts: centos
+  tasks:
+  - name: process for install 
+    include_tasks: install.yml
+  - name: process1
+    include_tasks: install-php-deb.yml
+  - name: process2
+    include_tasks: changelines.yml
+  - name: process3
+    include_tasks: mariadb.yml
+  - name: process4
+    include_tasks: zabbix.yml
+  - name: process5
+    include_tasks: firewall.yml
+  

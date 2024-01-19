@@ -1,0 +1,13 @@
+- name: open website ports
+  firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - http
+    - https
+
+- name: restart firewall service
+  service:
+    name: firewalld
+    state: restarted

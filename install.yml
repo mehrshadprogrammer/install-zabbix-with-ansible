@@ -1,0 +1,8 @@
+- name: install epel 
+  apt: 
+   name: "{{ item }}"
+   state: latest
+  loop:
+    - epel-release
+    - https://mirror.webtatic.com/yum/e17/webtatic-release.rpm
+    
